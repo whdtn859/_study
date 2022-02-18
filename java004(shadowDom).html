@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			h3{margin:20px 0; font-size:20px;}
+		</style>
+	</head>
+	<body>
+		<h3>shadowDom 보는 방법 크롬 개발도구 > 설정 > Show user agent shadow DOM 클릭</h3>
+
+		<input type="range">
+		<h3>테스트 템플릿</h3>
+		<div id="testDom"></div>
+
+		<template id="Numlist">
+			<style>
+				ul{list-style: none; padding:0; margin:0;}
+				li{padding:0; margin:10px 0; font-size:15px;}
+			</style>
+			<ul>
+				<li><label>1번</label><input type="checkbox"></li>
+				<li><label>2번</label><input type="checkbox"></li>
+				<li><label>3번</label><input type="checkbox"></li>
+				<li><label>4번</label><input type="checkbox"></li>
+			</ul>
+		</template>
+
+		<template id="Numlist2">
+			<style>
+				ul{list-style: none; padding:0; margin:0;}
+				li{list-style:none; padding:0; margin:10px 0; font-size:15px; color:#2e54fd; font-weight:600; line-height:18px;}
+				input{width:18px; height:18px; vertical-align: middle; margin:0 5px;}
+			</style>
+			<ul id="NumListUl">
+				<li>11</li>
+			</ul>
+		</template>
+		<h3>1번 템플릿</h3>
+		<custom-text></custom-text>
+		<h3>2번 템플릿</h3>
+		<custom-text2></custom-text2>
+		<h3>3번 템플릿</h3>
+		<custom-text3></custom-text3>
+
+		<script>
+			let userName = 'shadowDom';
+			// shadowDom 생성
+			document.querySelector('#testDom').attachShadow({mode : 'open'});
+			// shadowDom 안에 style 태그 입력 시 해당 영역에만 적용
+			document.querySelector('#testDom').shadowRoot.innerHTML = `<p> Hello ${userName}!</p> <style>p{color:red;}</style>`;
+
+			// web component 생성
+			class TEST_Component extends HTMLElement{
+				connectedCallback(){
+					this.innerHTML = '<p>Hello Component!</p>'
+				}
+			}
+			customElements.define("custom-text", TEST_Component);
+
+			// shadowDom 을 이용해 web component 생성
+			class TEST_Component2 extends HTMLElement{
+				connectedCallback(){
+					this.attachShadow({mode : 'open'});
+					this.shadowRoot.append(Numlist.content.cloneNode(true))
+				}
+			}
+			customElements.define("custom-text2", TEST_Component2);
+
+			// shadowDom 안에 내용 변경
+			function myComponent(){
+					
+				class TEST_Component3 extends HTMLElement{
+					connectedCallback(){
+						this.attachShadow({mode : 'open'});
+						this.shadowRoot.append(Numlist2.content.cloneNode(true));
+					}
+				}
+				customElements.define("custom-text3", TEST_Component3);
+				let shadow = document.querySelector('custom-text3');
+				let listItem = shadow.shadowRoot.querySelector('ul');
+				let html = '';
+				for(let i=0; i<5; i++) {
+					html += `<li><span>${i+1}번 입니다.</span><input type="checkbox"></li>`;
+				}
+				listItem.innerHTML = html;
+				console.log(html);
+				console.log(listItem);
+			}
+			myComponent();
+
+			
+		</script>
+	</body>
+</html>

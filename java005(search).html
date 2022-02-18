@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/reset.css" />
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <style>
+      .box {
+        position: relative;
+        margin: 50px;
+        height: 200px;
+        border: 1px solid black;
+      }
+      .search_wrap {
+        position: absolute;
+        left: 50%;
+        top: 50px;
+        transform: translateX(-50%);
+        width: 500px;
+        border: 1px solid #333;
+        border-radius: 20px;
+        overflow: hidden;
+        background: #fff;
+      }
+      .search_form {
+        display: flex;
+        padding: 5px 10px;
+      }
+      .search_form input[type="text"] {
+        flex: 1;
+        height: 40px;
+        padding: 0 10px;
+        vertical-align: top;
+        border: none;
+      }
+      .search_form button {
+        width: 40px;
+        height: 40px;
+        background: url("/img/ic_search.png") no-repeat center center;
+        vertical-align: top;
+      }
+
+      .search_list {
+        padding: 10px 0;
+        border-top: 1px solid #ddd;
+      }
+      .search_list li {
+        position: relative;
+        padding: 5px 40px 5px 20px;
+      }
+      .search_list li:focus,
+      .search_list li.focus {
+        background: #ddd;
+      }
+      .search_list button {
+        position: absolute;
+        right: 20px;
+        top: 5px;
+        height: 21px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <div class="search_wrap">
+        <div class="search_form">
+          <input type="text" id="search" placeholder="검색어를 입력해주세요." />
+          <button onclick="test();"><span class="blind">검색</span></button>
+        </div>
+
+        <ul class="search_list" id="listbox">
+          <li><a href="#" class="item">Seoul</a><button>X</button></li>
+          <li><a href="#" class="item">Busan</a><button>X</button></li>
+          <li><a href="#" class="item">Incheon</a><button>X</button></li>
+          <li><a href="#" class="item">Daegu</a><button>X</button></li>
+          <li><a href="#" class="item">Wonju</a><button>X</button></li>
+          <li><a href="#" class="item">Yeosu</a><button>X</button></li>
+          <li><a href="#" class="item">강릉</a><button>X</button></li>
+          <li><a href="#" class="item">횡성</a><button>X</button></li>
+        </ul>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      const $search = $("#search");
+      // 검색 자동완성
+      /*
+// 원래의 인풋 값을 받는다.
+var oldVal = $("#search");
+
+// 변경되는 값을 알기위해 change(값이 변경될 때 마다 함수 실행)나 keyup(키보드를 눌렀다가 뗄때 함수 실행) 사용한다.
+$("#search").on("change keyup", function () {
+	// 변경된 현재 값을 받아온다.
+	var currentVal = $("#search").val();
+	if (currentVal == oldVal) {
+		return;
+	}
+	// listbox에 li태그들을 배열화 시킴
+	var listArray = $("#listbox li").toArray();
+	// forEach의 첫번째 인자값 = 배열 내 현재 값
+	// forEach의 두번째 값 = index
+	// forEach의 세번째 값 = 현재 배열
+	listArray.forEach(function (c, i) {
+		var currentList = c;
+
+		// 현재 배열값에서 내용 추출
+		var currentListText = c.innerText;
+
+		// 검색 내용을 포함하지 않을 경우
+		if (currentListText.includes(currentVal) == false) {
+			currentList.style.display = "none";
+		}
+		// 검색 내용을 포함할 경우
+		if (currentListText.includes(currentVal)) {
+			currentList.style.display = "block";
+		}
+		// 검색 내용이 없을 경우
+		if (currentVal.trim() == "") {
+			currentList.style.display = "block";
+		}
+	});
+});
+*/
+
+      // 검색창 키보드 방향키로 포커싱 변경
+      /*
+let list = $('#listbox li');
+let lilen = list.length - 1 //.index()의 값과 맞추기 위해 1을 뺌
+let idx = -1; // 인덱스를 0으로 하면 아래 방향키를 누르다가 윗 방향키를 누를때 버벅임이 있어서 -1로 지정
+function searchKey(){
+
+	console.log('input');
+	$search.keydown(function(e){// 키보드를 누를 시 이벤트 발생
+		if(e.keyCode == '13'){ // 엔터키 누를 시 검색
+			$('.search_form button').trigger('click');
+		}else if(e.keyCode == '40'){ // 아래 방향키를 누를 시 함수 실행
+			console.log('down');
+			console.log(idx);
+			idx++; // 인덱스가 -1이니 먼저 값을 더해서 0으로 만들어줌
+			if(idx>lilen){ // 인덱스가 리스트에 갯수와 동일해지면 더 커지지 않게 고정
+				idx = lilen;
+				return false;
+			}
+			list.removeClass('focus');
+			list.eq(idx).addClass('focus');
+			console.log(idx);
+			let newVal = list.eq(idx).find('a').text(); // 현재 선택된 요소에 내용을 가져옴
+			$search.val(newVal); // 선택된 내용을 인풋 박스에 넣음
+			console.log(newVal);
+			return false;
+		}else if(e.keyCode == '38'){ // 윗 방향키를 누를 시 함수 실행
+			console.log('up');
+			idx--;
+			console.log(idx);
+			if(idx < 0){ //값이 떨어지는걸 방지
+				idx = -1;
+				return false;
+			}
+			console.log(idx);
+			list.removeClass('focus');
+			list.eq(idx).addClass('focus');
+			let newVal = list.eq(idx).find('a').text();
+			$search.val(newVal);
+			return false;
+		}
+	});
+*/
+      let list = $("#listbox li");
+      let lilen = list.length - 1;
+      let idx = 0;
+      function searchKey() {
+        $search.keydown(function (e) {
+          if (e.keyCode == "13") {
+            $(".search_form button").trigger("click");
+          } else if (e.keyCode == "40") {
+            console.log("down");
+            console.log(idx);
+            list.removeClass("focus");
+            list.eq(idx).addClass("focus");
+            let newVal = list.eq(idx).find("a").text();
+            $search.val(newVal);
+            idx++;
+            if (idx > lilen) {
+              idx = 0;
+              //return false;
+            }
+            console.log(idx);
+            console.log(newVal);
+            return false;
+          } else if (e.keyCode == "38") {
+            console.log("up");
+            console.log(idx);
+            list.removeClass("focus");
+            list.eq(idx).addClass("focus");
+            let newVal = list.eq(idx).find("a").text();
+            $search.val(newVal);
+            idx--;
+            if (idx < -lilen) {
+              idx = 0;
+              return false;
+            }
+            console.log(idx);
+            return false;
+          }
+        });
+      }
+      searchKey();
+
+      // 버튼 눌러지는 지 확인
+      function test() {
+        console.log("search");
+      }
+    </script>
+  </body>
+</html>

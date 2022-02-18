@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML5 Canvas</title>
+</head>
+<body>
+<canvas id="draw" width="800" height="800"></canvas>
+<input id="lineWid" type="range" name="lineWid" min="1" max="100" value="50" data-sizing="px">
+<input id="lineColor" type="color" name="lineColor" value="#ff0000">
+<button id="randomBtn">Random</button>
+<script>
+	const canvas = document.querySelector('#draw');
+	const ctx = canvas.getContext('2d');
+	canvas.width = window.innerWidth;
+	canvas.height = window.innerHeight;
+	ctx.strokeStyle = '#BADA55';
+	ctx.lineJoin = 'round';
+	ctx.lineCap = 'round';
+	ctx.lineWidth = 100
+	// ctx.globalCompositeOperation = 'multiply';
+
+	let isDrawing = false;
+	let lastX = 0;
+	let lastY = 0;
+	let hue = 0;
+	let direction = true;
+
+	function draw(e){
+		if(!isDrawing) return; // 마우스를 누르고 있지 않을 때는 함수 중지
+		// console.log(e);
+		ctx.beginPath();
+		ctx.moveTo(lastX, lastY);
+		ctx.lineTo(e.offsetX, e.offsetY);
+		ctx.stroke();
+		[lastX, lastY] = [e.offsetX, e.offsetY];
+
+		// 라인 색상 변환
+		// hue++;
+		// if(hue >= 360){
+		// 	hue = 0;
+		// }
+
+		// 라인 크기 변환
+		// if (ctx.lineWidth >= 100 || ctx.lineWidth <= 1) {
+		// 	direction = !direction;
+		// }
+
+		// if(direction) {
+		// 	ctx.lineWidth++;
+		// } else {
+		// 	ctx.lineWidth--;
+		// }
+	}
+
+	canvas.addEventListener('mousedown', (e) => {
+		isDrawing = true;
+		[lastX, lastY] = [e.offsetX, e.offsetY];
+		// input으로 크기 변경
+		ctx.lineWidth = document.querySelector('#lineWid').value;
+		// input으로 색상 변경
+		let hue = document.querySelector('#lineColor').value;
+		ctx.strokeStyle = hue;
+	});
+
+	// 버튼 클릭 시 랜덤으로 색상과 크기를 변경
+	function random(){
+		// 1 ~ 100 사이에 랜덤한 숫자
+		var randomWidth = Math.floor(Math.random()*101);
+		// 랜덤한 색상 값
+		var randomColor = Math.floor(Math.random()*16777215).toString(16);
+		document.querySelector('#lineWid').value = randomWidth;
+		document.querySelector('#lineColor').value = '#' + randomColor;
+	}
+	const randomBtn = document.querySelector('#randomBtn');
+	randomBtn.addEventListener('click', random);
+
+
+	canvas.addEventListener('mousemove', draw);
+	canvas.addEventListener('mouseup', () => isDrawing = false); // 마우스에서 손을 뗏을 때 함수 중지
+	canvas.addEventListener('mouseout', () => isDrawing = false); // 마우스가 벗어났을 때 함수 중지
+</script>
+
+<style>
+  html, body {
+	position:relative;
+    margin: 0;
+  }
+  body{
+	overflow: hidden;
+  }
+	#lineWid{
+		position: fixed;
+		left:0;
+		top:0;
+	}
+	#lineColor{
+		position: fixed;
+		left:150px;
+		top:0;
+	}
+	#randomBtn{
+		position:fixed;
+		left:0;
+		top:30px;
+	}
+</style>
+
+</body>
+</html>

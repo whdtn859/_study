@@ -1,0 +1,47 @@
+VIVASAM 프로젝트
+
+비상 깃랩 
+http://gitlab.visang.com/
+
+whdtn859@uniwiz.co.kr // bjs854625
+
+------------------------------------------------------------------------------------------------
+
+초등 PC
+운영 - https://e.vivasam.com
+개발 - https://dev-e.vivasam.com/main
+
+중고등 PC
+운영 - https://v.vivasam.com
+개발 - https://dev-v.vivasam.com/main
+
+초등 Mobile
+운영 - https://me.vivasam.com
+개발 - https://dev-me.vivasam.com/main
+
+중고등 Mobile
+운영 - https://mv.vivasam.com
+개발 - https://dev-mv.vivasam.com/main
+
+어드민
+운영 - https://vivadmin.vivasam.com/
+개발 - https://dev-vivadmin.vivasam.com/
+
+운영 테스트 계정
+id - hakim001
+pw - testsam~!@
+
+개발 테스트 계정
+id - testsam01 ~ testsam45
+pw - testsam~!@
+
+어드민 계정
+id - unidev
+pw - unidev~!@
+
+------------------------------------------------------------------------------------------------
+
+비상 RMS
+http://rms.visang.com/
+
+rms_baejs // rms_baejs
