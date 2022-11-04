@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Canvas 기초</title>
+	<link rel="stylesheet" href="/css/reset.css">
+	<style>
+		canvas{width:100%; height:100%;}
+	</style>
+</head>
+<body>
+	<canvas id="canvas" ></canvas>
+
+	<script>
+		// https://developer.mozilla.org/ko/docs/Web/API/Canvas_API
+
+		/** @type {HTMLCanvasElement} */ // vscode canvas 자동완성 기능
+		const canvas = document.getElementById('canvas'); // canvas를 변수로 지정한다.
+		const ctx = canvas.getContext('2d'); // canvas에 2D로 그릴 수 있게 지정한다.
+
+		// canvas의 크기를 잡아준다.
+		ctx.canvas.width = window.innerWidth;
+		ctx.canvas.height = window.innerHeight;
+
+		ctx.fillStyle = 'blue'; // 색을 설정한다.
+		// ctx.fillRect(x, y, width, height); 좌표 (x,y)에 width, height를 가진 사각형을 그린다.
+		ctx.fillRect(10, 0, 100, 100);
+		ctx.clearRect(35, 25, 50,50); // 사각형을 지운다.
+
+		ctx.save(); // 이전의 그리기 설정을 저장한다.
+		ctx.beginPath(); // 새로운 선을 그린다.
+		ctx.lineWidth = 5 // 선의 굵기를 지정한다.
+		ctx.strokeStyle = 'red' // 선의 색을 지정한다.
+
+		ctx.moveTo(10, 110); // 출발 지점을 정한다.
+		ctx.lineTo(110, 110); // 도착 지점을 정한다.
+		ctx.lineTo(110, 210);
+		ctx.lineTo(10, 210);
+		ctx.lineTo(10, 110); // 선을 이어서 그릴수도 있다.
+		ctx.stroke(); // 선을 그린다.
+		ctx.restore(); // 저장된 설정을 불러온다.
+		// ex) 밑에 그리기 객체들에는 lineWidth = 5, strokeStyle = 'red'가 적용되지 않는다.
+
+		// 별 그리기
+		ctx.fillRect(120, 10, 300, 300);
+		ctx.beginPath();
+		ctx.strokeStyle = '#333'
+		ctx.lineCap = 'round' // 선의 끝 부분을 설정한다.
+		// butt: 좌표에서 선 끝남(디폴트)
+		// square: 선 끝에 선 두께 반만큼 길이를 늘려서 마무리
+		// round: 선의 끝을 둥글게 마무리
+		ctx.lineJoin = 'round'
+		// mitter: 각진 모서리(디폴트)
+		// round: 둥근 모서리
+		// bevel: 끝이 잘린 모서리
+		ctx.moveTo(270, 10);
+		ctx.lineTo(370, 310);
+		ctx.lineTo(120, 120);
+		ctx.lineTo(420, 120);
+		ctx.lineTo(170, 310);
+		ctx.lineTo(270, 10);
+		ctx.stroke();
+		ctx.fillStyle = 'yellow';
+		ctx.fill();
+
+		function linsDash(){
+			// 점선 그리기
+			ctx.beginPath();
+			ctx.lineCap = 'butt'
+			ctx.lineWidth = 10;
+			ctx.moveTo(120, 50);
+			ctx.lineTo(800, 50);
+			ctx.setLineDash([20, 40, 60]); // 간격이 20, 40, 60 인 점선을 그린다.
+			ctx.stroke();
+		}
+
+		// 원 그리기
+		ctx.beginPath();
+		// ctx.arc(x, y, 반지름, 시작각도, 마지막 각도, 방향); x, y = 원의 중심의 위치
+		// 시작 각도를 0, 마지막 각도를 2*Math.PI 로 설정 시 원이 그려진다.
+		ctx.arc(60, 270 , 50, 0, 2*Math.PI);
+		ctx.stroke();
+		ctx.fillStyle = 'blue';
+		ctx.fill();
+
+		// 스마일 그리기
+		ctx.beginPath();
+		ctx.arc(60, 380, 50, 0, 2*Math.PI);
+		ctx.stroke();
+		ctx.beginPath();
+		ctx.arc(40, 370, 10, 0, 2*Math.PI);
+		ctx.stroke();
+		ctx.beginPath();
+		ctx.arc(80, 370, 10, 0, 2*Math.PI);
+		ctx.stroke();
+		ctx.beginPath();
+		ctx.arc(60, 390, 30, 0, Math.PI);
+		ctx.stroke();
+
+
+		// 반복문으로 그리기
+		for (var i = 0; i < 6; i++){
+			for (var j = 0; j < 6; j++){
+				ctx.fillStyle = 'rgb(' + Math.floor(255 - 42.5 * i) + ', ' + Math.floor(255 - 42.5 * j) + ', 0)';
+				ctx.fillRect(j*25+10,i*25+450,25,25);
+
+				ctx.strokeStyle = 'rgba(0, ' + Math.floor(255 - 42.5 * i) + ', ' + Math.floor(255 - 42.5 * j) + ','+ 0.0883 * (i+j)+')';
+				ctx.beginPath();
+				ctx.lineWidth = 3;
+				ctx.arc(22.5 + j * 25, 622.5 + i * 25, 10, 0, Math.PI * 2, true);
+				ctx.stroke();
+			}
+		}
+
+	</script>
+</body>
+</html>

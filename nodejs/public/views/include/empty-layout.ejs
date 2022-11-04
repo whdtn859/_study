@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<%- include('config') %>
+	<%- style %>
+	<%- script %>
+</head>
+<body>
+	<div class="wrap">
+		<div class="content">
+			<%- body %>
+		</div>
+
+
+		<div class="dark_mode">
+			<input type="checkbox" id="darkMode">
+			<label for="darkMode">Dark Mode</label>
+		</div>
+
+		<div id="loading" class="loading_wrap">
+			<div class="loading">
+				<p>Loading...</p>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>

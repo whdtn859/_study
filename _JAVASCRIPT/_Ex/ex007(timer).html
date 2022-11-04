@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Timer</title>
+	<link rel="stylesheet" href="../css/reset.css">
+	<style>
+		body{padding-top:100px;}
+		p{font-size:50px; text-align: center;}
+	</style>
+</head>
+<body>
+	<p id="timerUp">00 : 00 : 00</p>
+	<p id="timerDown">00 : 00 : 00</p>
+	<script>
+		// 00:00:00 => 24:00:00
+		const TimerUp = document.getElementById('timerUp');
+		let TIME = 0;
+
+		function updateTimerUp(){
+			const hours = Math.floor(TIME/3600); // 시간 구하는 공식
+			const checkMins = Math.floor(TIME/60);
+			const minutes = checkMins % 60; // 분 구하는 공식
+			const seconds = TIME % 60; // 초 구하는 공식
+
+			TimerUp.innerText = `${hours < 10 ? `0${hours}` : hours} : ${minutes < 10 ? `0${minutes}` : minutes} : ${seconds < 10 ? `0${seconds}` : seconds}`
+
+			TIME++;
+		}
+
+		// 현재 시간 => 00:00:00
+		const TimerDown = document.getElementById('timerDown');
+		function updateTimerDown(){
+			let now = new Date();
+			let nowHours = now.getHours();
+			let nowMin = now.getMinutes();
+			let nowSec = now.getSeconds();
+			let nowTime = nowHours*3600 + nowMin*60 + nowSec;
+			let TIME2 = 86400 - nowTime;
+
+			const hours = Math.floor(TIME2/3600);
+			const checkMins = Math.floor(TIME2/60);
+			const minutes = checkMins % 60;
+			const seconds = TIME2 % 60;
+			TimerDown.innerText = `${hours < 10 ? `0${hours}` : hours} : ${minutes < 10 ? `0${minutes}` : minutes} : ${seconds < 10 ? `0${seconds}` : seconds}`
+
+			TIME2--;
+		}
+
+		setInterval(function(){
+			updateTimerUp();
+			updateTimerDown();
+		}, 1000);
+	</script>
+</body>
+</html>

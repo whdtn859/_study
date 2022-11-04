@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8" />
+		<title>JAVASCRIPT-String</title>
+	</head>
+	<script>
+		const hr = '---------------------------------------------------------------------------'
+
+		const str = 'Hello, JavaScript';
+
+		console.log(str);
+		// Array와 동일하게 몇번째의 인자인이 확인 가능하다.
+		console.log(str[1]);
+		// String.indexOf()을 사용해 시작점을 찾을 수 있다.
+		console.log(str.indexOf('Java'));
+		// indexOf 를 사용해 문자열의 포함 여부를 확인할때는
+		// -1 보다 큰지 조건식을 넣어서 사용해야 한다.
+		// if문에서 0 == false
+		if(str.indexOf('Hello') > -1){
+			console.log('Hello가 포함된 문장입니다.');
+		}
+		console.log(hr);
+
+		// 알파벳일 경우 모두 대문자로 변경한다.
+		console.log(str.toUpperCase());
+		// 모두 소문자로 변경한다.
+		console.log(str.toLowerCase());
+		console.log(hr);
+
+		// 문자열 자르기
+		// 1. String.slice(startIndex, endIndex);
+		// startIndex부터 endIndex전까지의 문자열을 반환한다.
+		// startIndex가 endIndex보다 크면 빈 문자열을 반환한다.
+		// endIndex는 생략 가능. 생략 시 시작지점부터 끝까지 반환.
+		// endIndex는 음수도 사용 가능. 음수는 끝에서 부터 시작한다. -1 = 문자열의 마지막
+		console.log(str.slice(2, 9));
+		console.log(str.slice(4, -1));
+		console.log(hr);
+		// 2. String.substring(n, m);
+		// n부터 m사이의 문자열을 반환한다.
+		// n과 m의 위치가 바꿔도 동일하게 동작한다.
+		console.log(str.substring(2,9));
+		console.log(str.substring(9,2));
+		console.log(hr);
+		// 3. String.substr(startIndex, length);
+		// startIndex부터 length 개를 반환한다.
+		// 동작하는데 문제가 없으나 바람직하지 않은 특징을 가지고 있어, 사라질 가능성이 있다.
+		console.log(str.substr(2,9));
+		console.log(str.substr(9,5));
+		console.log(hr);
+
+		// 문자열 앞뒤 공백 제거
+		// String.trim();
+		const trimStr = "      Trim     ";
+		console.log(trimStr);
+		console.log(trimStr.trim());
+		console.log(hr);
+
+		// 문자열 반복
+		// String.repeat(n);
+		// 문자열을 n번 만큼 반복
+		const str2 = "Hello"
+		console.log(str2.repeat(5));
+
+	</script>
+	<body>
+		<p>JAVASCRIPT-String</p>
+	</body>
+</html>

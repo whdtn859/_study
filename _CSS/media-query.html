@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		*{margin:0; padding:0; box-sizing: border-box;}
+		.wrap{width:100%; margin:0 auto; padding:50px 20px; max-width:1240px; text-align: center;}
+		h1{font-size:50px;}
+		.txt_box{text-align: left;}
+		.txt_box p.prewrap{white-space: pre-wrap;}
+		.txt_box p+p{margin-top:5px;}
+		.txt_box .sub_tit{margin-top:20px; font-size:20px; font-weight:700;}
+		.txt_box .link{margin-top:20px; font-weight:700;}
+
+		.box{margin-top:30px;}
+		h3{font-size:25px;}
+		.item_box{margin:0 auto; padding:30px; display:flex; flex-wrap:wrap; justify-content: center; align-items: flex-start; gap:15px;}
+		.item{width:calc(33% - 15px); height:300px; border:1px solid #000;}
+		.bg1{background:red;}
+		.bg2{background:orange;}
+		.bg3{background:yellow;}
+		.bg4{background:green;}
+		.bg5{background:blue;}
+		.bg6{background:darkblue;}
+		.bg7{background:purple;}
+		.bg8{background:white;}
+		.bg9{background:black;}
+
+		@media screen and (max-width:820px) {
+			.item_box{gap:20px;}
+			.item{width:calc(50% - 10px);}
+		}
+
+		@media screen and (max-width:480px) {
+			.item_box{gap:20px;}
+			.item{width:100%;}
+		}
+
+		@media (prefers-color-scheme:dark){
+
+		}
+
+		/*
+
+
+
+		*/
+	</style>
+</head>
+<body>
+	<div class="wrap">
+		<h1>css 미디어 쿼리</h1>
+		<div class="txt_box">
+			<p class="sub_tit">css 미디어 쿼리란?</p>
+			<p>@media 태그를 사용하여 사용자가 사용하는 기기의 너비와 높이, 가로 모드 또는 세로 모드 등을 감지하여 조건에 해당할 경우에만 스타일을 적용해주는 CSS3의 속성이다.</p>
+			<p class="sub_tit">css 미디어 쿼리 구문</p>
+			<p class="prewrap" style="padding:30px; background:#ddd;">@media not|only media-type and (media-feature and|or|not media-feature) {<br>    CSS-Code;<br>}</p>
+			<p class="sub_tit">css 미디어 쿼리 유형(media-type)</p>
+			<p>@media all - 전체</p>
+			<p>@media screen - 컴퓨터, 태블릿, 모바일 등 화면일 경우에 적용</p>
+			<p>@media print - 사용자가 프린트할 경우에 적용</p>
+			<p>@media speach - 페이지를 소리내어 "읽는" 스크린리더에 적용</p>
+			<p class="sub_tit">css 미디어 쿼리 기능(media-feature)</p>
+			<p>너비와 높이 = max-width, min-width, max-height, min-height</p>
+			<p>뷰포트 방향 = orientation (landscape[가로], portrait[세로])</p>
+			<div class="link">
+				<p>자세한 내용은 <a href="https://www.w3schools.com/cssref/css3_pr_mediaquery.asp">https://www.w3schools.com/cssref/css3_pr_mediaquery.asp</a> 참조</p>
+				<p>또는 <a href="https://drafts.csswg.org/mediaqueries-5/#media-descriptor-table">https://drafts.csswg.org/mediaqueries-5/#media-descriptor-table</a> 참조</p>
+			</div>
+		</div>
+		<div class="box">
+			<h3></h3>
+			<p>
+
+			</p>
+			<div class="item_box">
+				<div class="item bg1"></div>
+				<div class="item bg2"></div>
+				<div class="item bg3"></div>
+				<div class="item bg4"></div>
+				<div class="item bg5"></div>
+				<div class="item bg6"></div>
+				<div class="item bg7"></div>
+				<div class="item bg8"></div>
+				<div class="item bg9"></div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

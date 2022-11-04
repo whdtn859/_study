@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Slide</title>
+		<link rel="stylesheet" href="../css/reset.css" />
+		<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+		<style>
+			body {padding-top: 100px;}
+			p {font-size: 50px;text-align: center;}
+
+			.slide_wrap{position:relative; height:600px; overflow: hidden;}
+			.slide_wrap img{position:absolute; top:0; left:50%; transform:translateX(-50%); display:none;}
+
+			.slide_wrap2{margin-top:30px; height:800px; overflow: hidden;}
+			.slide_wrap2>div{display:flex; width:100%; height:100%; transition: .3s;}
+			.slide_wrap2 img{width:100%;}
+			.slide_wrap2 img+img{margin-left: 30px;}
+		</style>
+	</head>
+	<body>
+		<p>슬라이드!</p>
+		<div class="slide_wrap">
+			<img src="../../img/slide/slide01.jpg">
+			<img src="../../img/slide/slide02.jpg">
+			<img src="../../img/slide/slide03.jpg">
+			<img src="../../img/slide/slide04.jpg">
+		</div>
+		<div class="slide_wrap2">
+			<div>
+				<img src="../../img/slide/slide01.jpg">
+				<img src="../../img/slide/slide02.jpg">
+				<img src="../../img/slide/slide03.jpg">
+				<img src="../../img/slide/slide04.jpg">
+			</div>
+		</div>
+		<script>
+
+			$(function () {
+				// fade로 조절
+				var imgSlide = $(".slide_wrap img"),
+					imgCount = imgSlide.length, // 이미지의 갯수 자동으로 세어줌
+					currentImg = 0, // 현재 보이는 이미지
+					nextImg;
+
+				// imgSlide.eq(currentImg).addClass("active");
+				imgSlide.eq(currentImg).show();
+
+				// setInterval(함수, 시간); 시간마다 함수를 실행
+				setInterval(function () {
+					nextImg = (currentImg + 1) % imgCount; // 이미지 갯수의 값으로 나눈 나머지값
+
+
+					imgSlide.eq(currentImg).fadeOut(1000);
+					imgSlide.eq(nextImg).fadeIn(1000);
+
+					currentImg = nextImg;
+				}, 3000);
+
+				// transform으로 조절
+				var imgSlide2 = $(".slide_wrap2>div"),
+					img2 = $('.slide_wrap2 img')
+					imgCount2 = img2.length,
+					currentImg2 = 0,
+					nextImg2 = 1,
+					imgWid = img2.eq(nextImg2).outerWidth(true); // 다음 이미지의 margin을 포함한 넓이
+
+				// setInterval(함수, 시간); 시간마다 함수를 실행
+				setInterval(function slideImg() {
+					nextImg2 = (currentImg2 + 1) % imgCount2; // 이미지 갯수의 값으로 나눈 나머지값
+					imgSlide2.css('transform',`translateX(-${nextImg2*imgWid}px)`);
+					currentImg2 = nextImg2;
+				}, 3000);
+			});
+		</script>
+	</body>
+</html>

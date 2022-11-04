@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Canvas 기초</title>
+	<link rel="stylesheet" href="/css/reset.css">
+	<style>
+		canvas{width:100%; height:100%;}
+	</style>
+</head>
+<body>
+	<canvas id="canvas" ></canvas>
+
+	<script>
+		/** @type {HTMLCanvasElement} */
+		const canvas = document.getElementById('canvas');
+		const ctx = canvas.getContext('2d');
+		ctx.canvas.width = window.innerWidth;
+		ctx.canvas.height = window.innerHeight;
+
+		// 선형 그라데이션
+		const grd = ctx.createLinearGradient(0, 0, 200, 200);
+		// 선형 그라데이션 오브젝트를 생성한다.
+		// createLinearGradient(x1, y1, x2, y2)
+		// (x1,y1) 지점에서 (x2,y2) 지점으로 이동하는 그라데이션을 생성한다.
+
+		grd.addColorStop(0, '#ff0000');
+		grd.addColorStop(0.5, '#00ff00');
+		grd.addColorStop(1, '#0000ff');
+		// 그라데이션의 색상을 지정한다.
+		// addColorStop(position, color);
+		// position - 0 ~ 1 사이의 숫자
+		// color - css 색상값
+
+		ctx.fillStyle = grd;
+		// 채우기 색을 그라데이션으로 지정한다.
+		ctx.fillRect(0, 0, 200, 200);
+
+		// 방사형 그라데이션
+		const grd2 = ctx.createRadialGradient(200, 410, 250, 200, 410, 0);
+		// 방사형 그라데이션 오브젝트를 생성한다.
+		// createRadialGradient(x1, y1, r1, x2, y2, r2)
+		// 반지름이 r1에 (x1, y1)을 중심으로 둔 원과 반지름이 r2에 (x2, y2)를 중심으로 둔 원을 사용하여 그라데이션을 생성
+		grd2.addColorStop(0, '#0000ff');
+		grd2.addColorStop(0.5, '#ff0000');
+		grd2.addColorStop(1, '#00ff00');
+		ctx.fillStyle = grd2;
+		ctx.fillRect(0, 210, 200, 200);
+
+		// 이미지 그리기
+		const img = new Image();
+		// 새로운 이미지 객체를 생성한다.
+		img.src = '../../img/canvas/eximg.jpg';
+		// 이미지 경로를 설정한다.
+		img.onload = function(){
+			// 이미지 로드가 완료된 후 그리는게 안전하다.
+			ctx.drawImage(img, 0, 420, 200, 200);
+			// 이미지를 그린다.
+			// drawImage(img, x, y, width, height);
+			// width, height 생략 시 이미지 크기대로 그려진다.
+		}
+
+		const img2 = new Image();
+		img2.src = '/img/canvas/eximg2.jpg'
+
+		img2.onload = function(){
+			ctx.drawImage(img2, 210, 0, 200, 200);
+			ctx.drawImage(img2, 242, 17, 91, 110, 210, 210, 200, 200);
+			// drawImage(img, sx, sy, swidth, sheight, x, y, width, height)
+			// 이미지에서 그려져야 하는 영역을 설정할 수 있다.
+			// (sx,sy) 지점에 swidth, sheight의 영역만큼만 잘라서 그려준다.
+
+			// 패턴 만들기
+			// 이미지 로드가 완료된 후 적용하는 것이 안전하다.
+			const pattern = ctx.createPattern(img2, 'repeat');
+			// 이미지로 패턴을 생성한다.
+			// repeat: 이미지 패턴 반복
+			// repeat-x: x축 반복
+			// repeat-y: y축 반복
+			// no-repeat: 반복 안함
+			ctx.fillStyle = pattern;
+			ctx.fillRect(420, 0, 1000, 410);
+		}
+
+		// 텍스트 그리기
+		ctx.fillStyle = 'pink'; // 텍스트 색상 설정
+		ctx.font = 'normal 500 24px sans-serif';
+		// 폰트 설정
+		// font = '스타일 굵기 크기 서체'
+		// 1) 스타일: normal(디폴트)|italic|oblique
+		// 2) 굵기: normal (디폴트)|bold|bolder|lighter
+		// 3) 크기: 숫자px (디폴트 10px)
+		// 4) 서체: sans-serif (디폴트)
+		// * 미지정시 ctx.font = "10px sans-serif" 디폴트 적용됨
+		ctx.textAlign = 'start';
+		// 텍스트 좌우 정렬 설정
+		// 텍스트의 x 좌표의 기준점이 된다.
+		// start or left (디폴트), end or right, center
+		ctx.textBaseline = 'top';
+		// 텍스트 상하 정렬 설정
+		// 텍스트의 y 좌표의 기준점이 된다.
+		// "alphabetic (디폴트), top, hanging, middle, ideographic, bottom
+		ctx.direction = 'ltr';
+		// 텍스트 방향 설정
+		// inheirt (디폴트), ltr, rtl
+		ctx.fillText('안녕하세요. Hello, World', 210, 420);
+		// 텍스트를 그린다.
+		// fillText('텍스트', x, y, max-width)
+		// max-width 설정 시 해당 넓이 만큼의 텍스트를 그린다.
+		ctx.strokeText('안녕하세요. Hello, World', 210, 450, 200);
+		// 텍스트 외곽선 그리기
+		// strokeText('텍스트', x, y, max-width)
+		// 외관선은 strokeStyle = '색상' 으로 지정한다.
+
+		const txt = ctx.measureText('안녕하세요. Hello, World');
+		// 현재 설정으로 텍스트가 그려질 때 ()안에 텍스트를 기준으로 측정할 수 있게 해준다.
+		// measureText('텍스트')
+		// 자세한 정보는 아래 링크에서 확인
+		// https://developer.mozilla.org/en-US/docs/Web/API/TextMetrics
+		console.log(txt.width); // 넓이
+
+		// textBaseline 속성 비교
+		ctx.textBaseline = 'alphabetic';
+		ctx.fillText('안녕', 210, 520, 200);
+		ctx.textBaseline = 'top';
+		ctx.fillText('안녕', 310, 520, 200);
+		ctx.textBaseline = 'hanging';
+		ctx.fillText('안녕', 410, 520, 200);
+		ctx.textBaseline = 'middle';
+		ctx.fillText('안녕', 510, 520, 200);
+		ctx.textBaseline = 'ideographic';
+		ctx.fillText('안녕', 610, 520, 200);
+		ctx.textBaseline = 'bottom';
+		ctx.fillText('안녕', 710, 520, 200);
+
+		// 비교를 위한 중심 선
+		ctx.beginPath();
+		ctx.moveTo(210, 520)
+		ctx.lineTo(800, 520);
+		ctx.stroke();
+
+	</script>
+</body>
+</html>

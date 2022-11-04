@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<script src="./tui-chart/tui-chart.js"></script>
+	<script src="./tui-datepicker/tui-date-picker.js"></script>
+	<script src="./tui-grid/tui-grid.js"></script>
+	<script src="./tui-grid/tui-code-snippet.js"></script>
+	<script src="./tui-grid/tui-grid_bak.css"></script>
+	<script src="./tui-grid/tui-pagination.js"></script>
+	<script src="./tui-tree/tui-tree.min.js"></script>
+	<link rel="stylesheet" href="./tui-chart/tui-chart.css">
+	<link rel="stylesheet" href="./tui-datepicker/tui-date-picker.css">
+	<link rel="stylesheet" href="./tui-grid/tui-grid.css">
+	<link rel="stylesheet" href="./tui-grid/tui-grid_bak.css">
+	<link rel="stylesheet" href="./tui-grid/tui-pagination.css">
+	<link rel="stylesheet" href="./tui-tree/tui-tree.min.css">
+	<style>
+		*,*:after,*:before{padding:0; margin:0; box-sizing: border-box;}
+		.box{padding:20px;}
+		.box+.box{margin-top:30px;}
+		.tit{margin-bottom:20px; text-align: center;}
+		h1{margin-bottom:10px; text-align: center;}
+		.chart_wrap{width:100%; height:400px;}
+		.chart_wrap+.chart_wrap{margin-top:20px;}
+	</style>
+</head>
+<body>
+	<div class="box">
+		<div class="tit">
+			<h1>TUI-CHART</h1>
+			<a class="link" href="https://github.com/nhn/tui.chart/blob/main/docs/ko/README.md">TUI-CHART 문서</a>
+			<p>차트의 종류별로 사용할 수 있는 옵션들이 다름</p>
+		</div>
+		<div class="chart_wrap" id="tui-chart1"></div>
+		<div class="chart_wrap" id="tui-chart2"></div>
+		<script>
+			/* line chart */
+			const lineEl = document.getElementById('tui-chart1'); // 차트가 그려질 영역의 id 값
+			const lineData = { // 차트의 데이터 값
+				categories: [ // X축의 값
+				'6/27',
+				'6/28',
+				'6/29',
+				'6/30',
+				'7/1',
+				'7/2',
+				'7/3',
+			],
+			series: [
+				{
+					name: "ABC",
+					data: [40, 50,  40, 50, 50, 100],
+				},
+				{
+					name: "DEF",
+					data: [20, 40, 50, 40, 60, 40, 50],
+				},
+				{
+					name: "GHI",
+					data: [80, 10, 60, 20, 100, 20, 50],
+				},
+			],
+			};
+			const lineOptions = { // 차트의 옵션
+				chart: {
+					title: {
+						text: "Line Chart", // 차트의 제목
+						offsetX: 0, // X축 오프셋 값 (내부 여백 : 15) (default : 0)
+						offsetY: 0, // Y축 오프셋 값 (내부 여백 : 10) (default : 0)
+						align: "center" // 제목 가로 정렬 - "left", "center", "right" (default : "left")
+					},
+					// animation: false, // 애니메이션 재생 여부 (default : true)
+					animation: {
+						duration: 3000 // 차트 애니메이션 재생 속도 (default : 500)
+					},
+					width: "100%", // 차트의 넓이 값 (default : "auto")
+					height: "100%", // 차트의 높이 (default : "auto")
+				},
+				series: {
+					showDot: true, //각 지점에 원형으로 표시할지 여부 (default : false)
+					eventDetectType: "grouped", // 툴팁에 데이터 표시 여부 (default : "point")
+					dataLabels: {
+						visible: true, // 각 지점에 데이터 값 표시 여부 (default : false)
+						offsetX: 30, // 양수는 오른쪽으로, 음수는 왼쪽으로 위치 이동
+						offsetY: -10, // 양수는 아래로, 음수는 위로 위치 이동
+					}
+				},
+				legend: {
+					visible:true, // 범례 표시 여부 (default : true)
+					align: "bottom", // 범례 위치 - "top", "bottom", "left", "right" (default : "right")
+					showCheckbox: false, // 범례의 체크박스 표시 여부 (default : true)
+				},
+				exportMenu: {
+					visible: true, // 내보내기 메뉴 버튼 노출 (default : true)
+					filename: "파일의 이름은 이걸로 하겠습니다.", // 내보낼 파일명
+				},
+				theme: {
+					series: {
+						colors:["red","blue","purple"], // 색상
+						dot: {
+							radius: 10, // 원의 크기
+							borderColor: "red", // 보더의 색상
+							borderWidth: 5, // 보더의 굵기
+						}
+					},
+					tooltip: {
+						// 툴팁의 기본 커스텀 적용 방법
+						// background: '#80CEE1',
+						// borderColor: '#3065AC',
+						// borderWidth: 10,
+						// borderRadius: 20,
+						// borderStyle: 'double',
+						// header: {
+						// 	fontSize: 14,
+						// 	fontWeight: 500,
+						// 	color: '#000',
+						// },
+						// body: {
+						// 	fontSize: 14,
+						// 	fontWeight: 400,
+						// 	color: '#666',
+						// },
+					},
+				},
+				tooltip: {
+					// 데이터 값을 받아와 다른 형식으로 노출할 수 있게 해준다.
+					formatter: (value) => `${value > 60 ? Math.floor(value/60)+'시간'+value%60+'분' : value+'분'}`, // 데이터 값을 시간으로 노출되게 하는 방법
+
+					// 커스텀 툴팁
+					// 데이터의 값을 그대로 가져오고 하단에 합계가 노출되게 함.
+					template: (model, defaultTooltipTemplate) => {
+						console.log(model); // 툴팁의 정보
+						console.log(defaultTooltipTemplate); // 툴팁의 헤더와 바디를 구성하는 태그
+						let totalData = 0;
+						for(let i=0; i<model.data.length; i++){
+							totalData += model.data[i].value;
+						}
+						return `
+							<div style="background:rgba(85,85,85,0.95); min-width: 140px; padding: 0 5px; text-align: center; color: #fff; border-radius:3px;">
+								${defaultTooltipTemplate.header}
+								${defaultTooltipTemplate.body}
+								<div style="display:flex; justify-content:space-between; padding:8px 15px; border-top:1px solid rgba(0,0,0,0.1); font-size:13px;">
+									<span>합계</span>
+									<span>${totalData > 60 ? Math.floor(totalData/60)+'시간'+totalData%60+'분' : totalData+'분'}</span>
+								</div>
+							</div>;
+						`
+					},
+				},
+			};
+			const lineChart = toastui.Chart.lineChart({ el:lineEl, data:lineData, options:lineOptions });
+
+			/* column chart */
+			const columnEl = document.getElementById('tui-chart2'); // 차트가 그려질 영역의 id 값
+			const columnData = { // 차트의 데이터 값
+				categories: ['6/27','6/28','6/29','6/30','7/1','7/2','7/3',],// X축의 값
+				series: [
+					{
+						name: "ABC",
+						data: [40, 50,  40, 50, 50, 100],
+					},
+					{
+						name: "DEF",
+						data: [20, 40, 50, 40, 60, 40, 50],
+					},
+					{
+						name: "GHI",
+						data: [80, 10, 60, 20, 100, 20, 50],
+					},
+				],
+			};
+			const columnOptions = { // 차트의 옵션
+				chart: {
+					title: {
+						text: "Column Chart", // 차트의 제목
+						offsetX: 0, // X축 오프셋 값 (내부 여백 : 15) (default : 0)
+						offsetY: 0 , // Y축 오프셋 값 (내부 여백 : 10) (default : 0)
+						align: "center" // 제목 가로 정렬 - "left", "center", "right" (default : "left")
+					},
+				},
+				series: {
+					// stack: true, // 그래프를 쌓아서 한줄로 노출할 지 여부 (default : false)
+					stack:{ // 타입을 입력해서 사용할 수도 있음 - "percent", "normal" (true로만 입력 시 default : "normal")
+						type: "percent",
+					},
+					eventDetectType: "grouped", // 툴팁에 데이터 표시 여부 (default : "point")
+					selectable: true, // 해당 영역에 클릭 이벤트 추가 (default : false)
+					dataLabels: {
+						visible: true, // 각 지점에 데이터 값 표시 여부 (default : false)
+						offsetX: 0, // 양수는 오른쪽으로, 음수는 왼쪽으로 위치 이동
+						offsetY: 0, // 양수는 아래로, 음수는 위로 위치 이동
+					}
+				},
+				legend: {
+					visible:true, // 범례 표시 여부 (default : true)
+					align: "bottom", // 범례 위치 - "top", "bottom", "left", "right" (default : "right")
+					showCheckbox: true, // 범례의 체크박스 표시 여부 (default : true)
+				},
+				exportMenu: {
+					visible: false, // 내보내기 메뉴 버튼 노출 (default : true)
+					filename: "파일의 이름은 이걸로 하겠습니다.", // 내보낼 파일명
+				},
+				theme: {
+					series: {
+						colors:["orange","cyan","gray"], // 색상
+					},
+					tooltip: {
+						// 툴팁의 기본 커스텀 적용 방법
+						background: '#80CEE1',
+						borderColor: '#3065AC',
+						borderWidth: 10,
+						borderRadius: 20,
+						borderStyle: 'double',
+						header: {
+							fontSize: 17,
+							fontWeight: 700,
+							color: '#000',
+						},
+						body: {
+							fontSize: 15,
+							fontWeight: 500,
+							color: '#333',
+						},
+					},
+				},
+				tooltip: {},
+			};
+			const columnChart = toastui.Chart.columnChart({ el:columnEl, data:columnData, options:columnOptions });
+
+			// option에서 selectable: true 일 경우 사용할 수 있는 함수
+			columnChart.on('selectSeries', (evt) => {
+				console.log(evt);
+			});
+		</script>
+	</div>
+	<div class="box">
+		<div class="tit">
+			<h1>TUI-GRID</h1>
+			<a class="link" href="https://github.com/nhn/tui.grid/tree/master/packages/toast-ui.grid/docs/ko">TUI-GRID 문서</a>
+		</div>
+		<div id="tui-grid"></div>
+		<script>
+			var Grid = tui.Grid;
+
+			Grid = new Grid({
+				el: document.getElementById('tui-grid'),
+				scrollX: false, // X축 스크롤 여부 (default : true)
+      	scrollY: false, // Y축 스크롤 여부 (default : true)
+				columns: [
+					{
+						header: '날짜',
+						name: 'date',
+						width: 200,
+						editor: {
+							type: 'datePicker',
+							options: {
+								format: 'yyyy-MM-dd'
+							}
+						}
+					},
+					{
+						header: 'ID', // 헤더에 표시될 텍스트
+						name: 'id', // 헤더의 name
+						align: 'center', // 텍스트 좌우 정렬 (default : 'left')
+						width: 100, // 셀의 넓이 값 (최소 50 - minWidth로 더 작게 지정 가능)
+						minWidth: 40, // 최소 넓이 값
+					},
+					{
+						header: '이름',
+						name: 'name',
+						align: 'left',
+						width: 150,
+						editor: 'text', // 해당 컬럼을 선택 시 input[type='text']로 값 변경 가능 ('text', 'radio', 'checkbox', 'select', 'password' 사용 가능)
+					},
+					{
+						header: '나이',
+						name: 'age',
+						width: 150,
+						align: 'center',
+						formatter: 'listItemText', // 값을 변경 했을 때 listItems의 value 값이 아닌 text값으로 들어가게 적용
+						editor: {
+							type: 'radio',
+							options: { // 옵션 값
+								listItems: [
+									{ text: 'children', value: '1' },
+									{ text: 'teenager', value: '2' },
+									{ text: 'adult', value: '3' },
+								]
+							}
+						},
+					},
+					{
+						header: '성별',
+						name: 'gender',
+						formatter: 'listItemText',
+						width: 150,
+						editor: {
+							type: 'select',
+							options: {
+								listItems: [
+									{ text: 'male', value: '1' },
+									{ text: 'female', value: '2' },
+								]
+							}
+						},
+					},
+					{
+						header: '취미',
+						name: 'hobby',
+						editor: 'text',
+						autoWidth: true,
+					},
+				],
+				data: [
+					{
+						date:'2022-10-12',
+						id:'001',
+						name:'Kim',
+						age:'children',
+						gender:'male',
+						hobby:'baseball',
+					},
+					{
+						date:'2022-10-12',
+						id:'002',
+						name:'Park',
+						age:'adult',
+						gender:'male',
+						hobby:'footbal',
+					},
+					{
+						date:'2022-10-12',
+						id:'003',
+						name:'Kimino',
+						age:'teenager',
+						gender:'female',
+						hobby:'reading',
+					},
+					{
+						date:'2022-10-12',
+						id:'004',
+						name:'namaewa',
+						age:'teenager',
+						gender:'male',
+						hobby:'none',
+					},
+					{
+						date:'2022-10-12',
+						id:'005',
+						name:'Baek',
+						age:'adult',
+						gender:'male',
+						hobby:'communication',
+					},
+				]
+			});
+
+			// 셀의 값이 변경될 때 실행되는 함수
+			Grid.on('beforeChange', ev => {
+				console.log('before change:', ev);
+			});
+			Grid.on('afterChange', ev => {
+				console.log('after change:', ev);
+			})
+		</script>
+	</div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+@charset "utf-8";
+
+/* Reset */
+* { margin:0; padding:0;box-sizing:border-box;}
+body {color:#333;background:#fff;}
+ol, ul, li { list-style:none; }
+input, img, fieldset, blockquote, button { padding:0; border:0; }
+input { outline:none; border:1px solid #ddd;}
+i, em, cite { font-style:normal; }
+a { color:#333; text-decoration:none; }
+a:hover{ color:#333; text-decoration:none; }
+textarea { resize:none; }
+img { float:none; }
+button{color:#666;border:0 none;background:none;cursor:pointer}
+button:hover,button:active{border:none;}
+legend{display:none}
+caption{width:0;height:0;line-height:0;text-indent:-9999px;overflow:hidden;font-size:0;visibility:hidden}
+table{border-collapse:collapse;border-spacing:0;table-layout:fixed;max-width:100%;font-size:inherit}
+th, td { border-collapse:collapse; }
+table img{vertical-align:middle}
+img, select{vertical-align:top}
+select{border:1px solid #9c9c9c;background:#fff;font-size:14px;color:#9c9c9c}
+em, address {font-style:normal}
+
+
+.clfix {*zoom: 1}
+.clfix:after {content: ''; display: block; clear: both;}
+.blind {position:absolute;left:-1000000px;text-indent:-1000000px;overflow:hidden;;margin:-1px;width:1px;height:1px;}
+

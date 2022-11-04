@@ -1,0 +1,122 @@
+<link rel="stylesheet" href="/css/board.css">
+
+<script>
+	$(function(){
+		$('#fileList').on('click', 'button', function(){
+			$(this).closest('li').remove();
+		});
+	});
+
+	function fileUpload(file, idx){
+		console.log(file,idx);
+		if(idx == 0 || idx == null) idx = '';
+		if(idx > 0) idx++
+		let fileValue = file.value;
+		let fileText = document.getElementById(`fileText${idx}`);
+
+		fileText.value = fileValue;
+	}
+
+	function fileTextUpload(el){
+		let evt = new MouseEvent('click');
+		let fileInput = el.parentNode.querySelector('input[type=file');
+
+		fileInput.dispatchEvent(evt);
+	}
+
+	function fileMultiUpload(el){
+		let multiLimit = 5;
+		const filList = document.getElementById('fileList');
+		let html ='';
+
+		if(el.files.length > multiLimit){
+			alert('파일은 최대 5개까지 등록 가능합니다.');
+			return;
+		}
+
+		for(let i = 0; i < el.files.length; i++){
+			console.log(el.files[i]);
+			if(el.files[i].type != 'image/png' && el.files[i].type != 'image/jpeg'){
+				alert('이미지 파일만 등록해주세요.');
+				return;
+			}
+
+			html +='<li>';
+			html +=	'<a href="'+ el.files[i].webkitRelativePath +'"download>';
+			html +=	el.files[i].name;
+			html +=	'</a>';
+			html +=	'<button type="button" class="btn_del">X</button>';
+			html +='</li>';
+		}
+
+		filList.innerHTML += html;
+	}
+
+</script>
+
+<form action="/board/detail" method="POST">
+	<div class="tblist">
+		<table>
+			<colgroup>
+				<col width="15%">
+				<col width="auto">
+			</colgroup>
+			<tbody>
+				<tr>
+					<th><p>제목</p></th>
+					<td><input type="text" placeholder="제목" name="title"></td>
+				</tr>
+				<tr>
+					<th><p>내용</p></th>
+					<td><input type="text" placeholder="내용" name="contents"></td>
+				</tr>
+				<tr>
+					<th><p>1번 파일</p></th>
+					<td>
+						<div class="file_wrap">
+							<input type="file" id="fileInput" name="file" onchange="fileUpload(this)">
+							<label for="fileInput">파일 첨부</label>
+							<input type="text" id="fileText" readonly onclick="fileTextUpload(this)">
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th><p>2번 파일</p></th>
+					<td>
+						<div class="file_wrap">
+							<input type="file" id="fileInput2" name="file" onchange="fileUpload(this, 1)">
+							<label for="fileInput2">파일 첨부</label>
+							<input type="text" id="fileText2" readonly onclick="fileTextUpload(this)">
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th><p>3번 파일</p></th>
+					<td>
+						<div class="file_wrap">
+							<input type="file" id="fileInput3" name="file" onchange="fileUpload(this, 2)">
+							<label for="fileInput3">파일 첨부</label>
+							<input type="text" id="fileText3" readonly onclick="fileTextUpload(this)">
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th><p>이미지 파일</p></th>
+					<td>
+						<div class="file_wrap">
+							<input type="file" id="fileMultiInput" name="fileMulti" onchange="fileMultiUpload(this)" multiple>
+							<label for="fileMultiInput">파일 첨부</label>
+							<ul id="fileList" class="fileList">
+							</ul>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="btn_wrap">
+		<div class="f_right">
+			<button type="submit" class="btn btn_type01">저장</button>
+		</div>
+	</div>
+</form>

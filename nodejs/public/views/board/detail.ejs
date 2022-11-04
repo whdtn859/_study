@@ -1,0 +1,31 @@
+<link rel="stylesheet" href="/css/board.css">
+
+
+<div class="tblist">
+	<table>
+		<colgroup>
+			<col width="15%">
+			<col width="auto">
+		</colgroup>
+		<tbody>
+			<tr>
+				<th><p>제목</p></th>
+				<td><p><%- list.title%></p></td>
+			</tr>
+			<tr>
+				<th><p>내용</p></th>
+				<td>
+					<p><%- list.contents%></p>
+					<p><%- list.file%></p>
+					<p><%- list.fileMulti%></p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<div class="btn_wrap">
+	<div class="f_right">
+		<a href="/board/list" class="btn btn_type01">목록</a>
+	</div>
+</div>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		*{margin:0; padding:0; box-sizing: border-box;}
+		.box{padding:50px;}
+	</style>
+</head>
+<body>
+	<div class="box">
+
+		<div id="item"></div>
+	</div>
+	<script>
+
+
+
+		class MyFunc {
+			constructor(el, option){
+				this.el = document.querySelector(el);
+				this.option = {
+					name: '',
+					age: '',
+					gender: '',
+				}
+				this.MyFuncActive = function (el) {this.MyFuncActive(el);}
+				el.addEventListener('DOMContentLoaded', MyFuncActive);
+			}
+			MyFuncActive (el){
+				el.innerText += JSON.stringify(this.el);
+				el.innerText += JSON.stringify(this.option);
+			}
+		}
+
+		const testCase = new MyFunc('#item', {
+			name:'Kim',
+			age:22,
+			gender:'M',
+		});
+
+		console.log(testCase);
+
+	</script>
+</body>
+</html>

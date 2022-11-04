@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html ⚡4email data-css-strict>
+  <head>
+    <meta charset="utf-8" />
+    <style amp4email-boilerplate>body{visibility:hidden}</style>
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+    <script async custom-element="amp-selector" src="https://cdn.ampproject.org/v0/amp-selector-0.1.js"></script>
+    <script async custom-element="amp-bind" src="https://cdn.ampproject.org/v0/amp-bind-0.1.js"></script>
+    <script async custom-element="amp-anim" src="https://cdn.ampproject.org/v0/amp-anim-0.1.js"></script>
+    <script async custom-element="amp-carousel" src="https://cdn.ampproject.org/v0/amp-carousel-0.1.js"></script>
+    <script async custom-element="amp-accordion" src="https://cdn.ampproject.org/v0/amp-accordion-0.1.js"></script>
+    <style amp-custom>
+      *{
+        box-sizing: border-box;
+      }
+      h1 {
+        margin: 1rem 0.5rem;
+      }
+      h2 {
+        margin: 0.5rem;
+      }
+      amp-img{
+        border: 3px solid cyan;
+      }
+      amp-anim{
+        border: 3px solid red;
+      }
+      .center{
+        text-align: center;
+      }
+      .slide{
+        position:relative;
+      }
+      .slide_cnt{
+        position:absolute;
+        left:20px; bottom:50px;
+        padding:20px;
+        background:rgba(0, 0, 0, 0.5);
+        color:#fff;
+        font-size:24px; 
+        font-weight:500; 
+      }
+      .carousel-preview{
+        text-align: center;
+        margin-top: 1rem;
+      }
+      .lightbox-close{
+        background:none;
+        border:2px solid red;
+        font-size:36px;
+        color:#fff;
+        cursor: pointer;
+        position:absolute;
+        left:50px; top:100px;
+        z-index:10;
+      }
+      .vt-top{
+        vertical-align:top;
+      }
+    </style>
+  </head>
+  <body>
+    <amp-state id="myState">
+      <script type="application/json">
+        {
+          "cats": [
+             {
+              "name": "Aakash",
+              "description": "Very sweet gentleman that is quite shy in a shelter environment. He may hide under his blanket upon initial approach, but he is an affectionate lovebug."
+            },
+            {
+              "name": "Filip",
+              "description": "Friendly and enjoys pets and head rubs. Is known to sit on keyboards and refuses to touch anything with catnip on it."
+            },
+            {
+              "name": "Julian",
+              "description": "Both bold and extremely sweet. Wastes no time in investigating new smells, objects, and places, but enjoys lazing in the sun!"
+            },
+            {
+              "name": "John",
+              "description": "This playful and spirited cat would like to be outside his kennel and will be so happy when he gets to his forever home with more room to move."
+            }
+          ]
+        }
+      </script>
+    </amp-state>
+    <div class="center">
+      <h1>
+        <span [text]="myState.cats.name">Aakash</span>  <span [text]="myState.cats.description">is available for adoption!</span>
+      </h1>
+    </div>
+    <h1>Slide</h1>
+    <div class="slide">
+      <amp-carousel
+          id="apmSlide"
+          layout="responsive"
+          type="slides"
+          autoplay
+          data-next-button-aria-label="다음 슬라이드"
+          data-prev-button-aria-label="이전 슬라이드"
+          delay="3000"
+          [slide]="selectedSlide" 
+          on="slideChange:AMP.setState({ selectedSlide: event.index }), carouselWithPreviewSelector.toggle(index=event.index, value=true)"
+          role="region"
+          width="960" height="720">
+        <amp-img width="960" height="720" on="tap:lightbox1" role="button" tabindex='0' src="https://cdn.pixabay.com/photo/2017/07/17/00/58/coffee-2511065_960_720.jpg"></amp-img>
+        <amp-img width="960" height="720" on="tap:lightbox1" role="button" tabindex='0' src="https://cdn.pixabay.com/photo/2021/09/07/10/11/coffee-beans-6603499_960_720.jpg"></amp-img>
+        <amp-img width="960" height="720" on="tap:lightbox1" role="button" tabindex='0' src="https://cdn.pixabay.com/photo/2017/07/17/00/58/coffee-2511065_960_720.jpg"></amp-img>
+        <amp-img width="960" height="720" on="tap:lightbox1" role="button" tabindex='0' src="https://cdn.pixabay.com/photo/2021/09/07/10/11/coffee-beans-6603499_960_720.jpg"></amp-img>
+      </amp-carousel>
+			<amp-image-lightbox id="lightbox1" layout="nodisplay"></amp-image-lightbox>
+      <amp-selector id="carouselWithPreviewSelector" class="carousel-preview" on="select:apmSlide.goToSlide(index=event.targetOption)" layout="container">
+        <amp-img option="0" selected src="https://unsplash.it/60/40?image=10" width="60" height="40" alt="a sample image"></amp-img>
+        <amp-img option="1" src="https://unsplash.it/60/40?image=11" width="60" height="40" alt="a sample image"></amp-img>
+        <amp-img option="2" src="https://unsplash.it/60/40?image=12" width="60" height="40" alt="a sample image"></amp-img>
+        <amp-img option="3" src="https://unsplash.it/60/40?image=13" width="60" height="40" alt="a sample image"></amp-img>
+      </amp-selector>
+      <p class="slide_cnt">Selected slide: <span [text]="+selectedSlide + 1">1</span>/4</p>
+    </div>
+    <h1>Carousel</h1>
+    <amp-carousel height="240" type="carousel" role="region" aria-label="Basic usage carousel">
+      <amp-img width="320" height="240" src="https://cdn.pixabay.com/photo/2021/09/07/10/11/coffee-beans-6603499_960_720.jpg"></amp-img>
+      <amp-img width="320" height="240" src="https://cdn.pixabay.com/photo/2017/07/17/00/58/coffee-2511065_960_720.jpg"></amp-img>
+    </amp-carousel>
+    <h1>Image</h1>
+    <h2>Responsive</h2>
+    <amp-img layout="responsive" width="960" height="720" sizes="(min-width: 640px) 50vw, 100vw" src="https://cdn.pixabay.com/photo/2017/07/17/00/58/coffee-2511065_960_720.jpg"></amp-img>
+    <h2>Fixed</h2>
+    <amp-img id="hide-img" layout="fixed" width="320" height="240" src="https://cdn.pixabay.com/photo/2021/09/07/10/11/coffee-beans-6603499_960_720.jpg"></amp-img>
+    <button class="vt-top" on="tap:hide-img.toggleVisibility">
+      Button
+    </button>
+    <span class="vt-top">이 버튼을 누르면 이미지가 사라집니다.</span>
+    <h1>Animation</h1>
+    <h2>Placeholder</h2>
+    <amp-anim src="https://media1.giphy.com/media/g96QRNjWUvdKw/giphy.gif" width="466" height="355" layout="responsive">
+      <amp-img placeholder src="https://cdn.pixabay.com/photo/2021/09/07/10/11/coffee-beans-6603499_960_720.jpg" layout="fill"></amp-img>
+    </amp-anim>
+    <h2>amp-img GIF</h2>
+    <amp-img width="466" height="355" layout="responsive" src="https://media1.giphy.com/media/g96QRNjWUvdKw/giphy.gif"></amp-img>
+  </body>  
+</html>
